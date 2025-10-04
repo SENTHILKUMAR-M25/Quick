@@ -21,9 +21,23 @@ function EnquiryForm({ service, onClose }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
 
-    setSuccessMsg(`Enquiry submitted for: ${service}`);
+    // ✅ Replace with your Admin WhatsApp Number (with country code, no + or spaces)
+    const adminNumber = "918925393946"; 
+
+    const whatsappMessage = `Hello Sir/Madam,%0A
+📌 New Enquiry Submission%0A
+🛠 Service: ${service}%0A
+👤 Full Name: ${formData.fullName}%0A
+🏢 Company: ${formData.companyName}%0A
+📧 Email: ${formData.email}%0A
+📞 Contact: ${formData.contactNumber}%0A
+💬 Message: ${formData.message}`;
+
+    // Open WhatsApp with pre-filled message
+    window.open(`https://wa.me/${adminNumber}?text=${whatsappMessage}`, "_blank");
+
+    setSuccessMsg(`Enquiry sent for: ${service}`);
     setTimeout(() => setSuccessMsg(""), 3000);
 
     setFormData({
@@ -106,7 +120,7 @@ function EnquiryForm({ service, onClose }) {
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}>
               <label className="block text-sm font-medium text-gray-700">Contact Number</label>
               <input
-                type="text"
+                type="tel"
                 name="contactNumber"
                 value={formData.contactNumber}
                 onChange={handleChange}
@@ -131,9 +145,9 @@ function EnquiryForm({ service, onClose }) {
               type="submit"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="w-full py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-md shadow focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="w-full py-2 px-4 bg-green-600 hover:bg-green-700 text-white font-medium rounded-md shadow focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
             >
-              Submit Enquiry
+              📲 Send via WhatsApp
             </motion.button>
           </form>
         </motion.div>
