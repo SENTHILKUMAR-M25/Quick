@@ -23,7 +23,7 @@ function EnquiryForm({ service, onClose }) {
     e.preventDefault();
 
     // ✅ Replace with your Admin WhatsApp Number (with country code, no + or spaces)
-    const adminNumber = "918925393946"; 
+    const adminNumber = "96599693670"; 
 
     const whatsappMessage = `Hello Sir/Madam,%0A
 📌 New Enquiry Submission%0A
