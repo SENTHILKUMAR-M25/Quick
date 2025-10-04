@@ -21,7 +21,7 @@ export default function ContactForm() {
 
   if (Object.keys(newErrors).length === 0) {
     // ✅ Replace with your Admin WhatsApp Number (with country code, no + or spaces)
-    const adminNumber = "+91 8925393946"; 
+    const adminNumber = "918925393946"; 
 
     const whatsappMessage = `Hello Admin,%0A
     📌 New Contact Form Submission:%0A
