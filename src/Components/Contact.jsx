@@ -10,21 +10,34 @@ export default function ContactForm() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    let newErrors = {};
-    if (!formData.name) newErrors.name = "Name is required";
-    if (!formData.email) newErrors.email = "Email is required";
-    if (!formData.message) newErrors.message = "Message cannot be empty";
+ const handleSubmit = (e) => {
+  e.preventDefault();
+  let newErrors = {};
+  if (!formData.name) newErrors.name = "Name is required";
+  if (!formData.email) newErrors.email = "Email is required";
+  if (!formData.message) newErrors.message = "Message cannot be empty";
 
-    setErrors(newErrors);
+  setErrors(newErrors);
 
-    if (Object.keys(newErrors).length === 0) {
-      setSubmitted(true);
-      setFormData({ name: "", email: "", message: "" });
-      setTimeout(() => setSubmitted(false), 3000);
-    }
-  };
+  if (Object.keys(newErrors).length === 0) {
+    // ✅ Replace with your Admin WhatsApp Number (with country code, no + or spaces)
+    const adminNumber = "8925393946"; 
+
+    const whatsappMessage = `Hello Admin,%0A
+    📌 New Contact Form Submission:%0A
+    👤 Name: ${formData.name}%0A
+    📧 Email: ${formData.email}%0A
+    💬 Message: ${formData.message}`;
+
+    // Open WhatsApp with pre-filled message
+    window.open(`https://wa.me/${adminNumber}?text=${whatsappMessage}`, "_blank");
+
+    setSubmitted(true);
+    setFormData({ name: "", email: "", message: "" });
+    setTimeout(() => setSubmitted(false), 3000);
+  }
+};
+
 
   return (
     <div className="max-w-lg mx-auto bg-white/30 backdrop-blur-lg shadow-2xl rounded-2xl p-8 border border-white/20 mt-10">
