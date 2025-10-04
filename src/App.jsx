@@ -5,20 +5,18 @@ import Hero from './Components/Hero'
 import AboutSection from './Components/About'
 import ServicesSection from './Components/Service'
 import Footer from './Components/Footer'
-import ProductSection from './Components/Product'
-import Items from './Components/Items'
 import ContactForm from './Components/Contact'
+import ScrollToTop from './Components/Scroll'
 
 function App() {
   return (
     <BrowserRouter>
     <Navbar />
+    <ScrollToTop />
       <Routes>
         <Route path="/" element={<Hero />} />
         <Route path="/About" element={<AboutSection />} />
         <Route path="/services" element={<ServicesSection />} />
-        <Route path="/product" element={<ProductSection />} />
-        <Route path="/products/:category" element={<Items />} />
         <Route path="/Contact" element={<ContactForm />} />
 
       </Routes>

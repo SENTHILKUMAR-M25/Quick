@@ -1,13 +1,8 @@
-// src/components/ContactForm.jsx
 import { useState } from "react";
+import { User, Mail, MessageSquare, Send } from "lucide-react";
 
 export default function ContactForm() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
-
+  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
 
@@ -15,80 +10,86 @@ export default function ContactForm() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const validate = () => {
-    const newErrors = {};
-    if (!formData.name.trim()) newErrors.name = "Name is required";
-    if (!formData.email.trim()) {
-      newErrors.email = "Email is required";
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "Email is invalid";
-    }
-    if (!formData.message.trim()) newErrors.message = "Message is required";
-    return newErrors;
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    const validationErrors = validate();
-    if (Object.keys(validationErrors).length === 0) {
-      console.log("Form Data:", formData);
+    let newErrors = {};
+    if (!formData.name) newErrors.name = "Name is required";
+    if (!formData.email) newErrors.email = "Email is required";
+    if (!formData.message) newErrors.message = "Message cannot be empty";
+
+    setErrors(newErrors);
+
+    if (Object.keys(newErrors).length === 0) {
       setSubmitted(true);
       setFormData({ name: "", email: "", message: "" });
-    } else {
-      setErrors(validationErrors);
+      setTimeout(() => setSubmitted(false), 3000);
     }
   };
 
   return (
-    <div className="max-w-md mx-auto bg-white shadow-lg rounded-lg p-8">
-      <h2 className="text-2xl font-semibold mb-6 text-center">Contact Us</h2>
+    <div className="max-w-lg mx-auto bg-white/30 backdrop-blur-lg shadow-2xl rounded-2xl p-8 border border-white/20 mt-10">
+      <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">📩 Contact Us</h2>
+      
       {submitted && (
-        <div className="bg-green-100 text-green-800 p-3 rounded mb-4 text-center">
-          Message sent successfully!
+        <div className="bg-green-100 text-green-700 p-3 rounded-lg mb-4 text-center shadow">
+          ✅ Message sent successfully!
         </div>
       )}
-      <form onSubmit={handleSubmit} className="space-y-4">
+
+      <form onSubmit={handleSubmit} className="space-y-5">
         <div>
-          <label className="block mb-1 font-medium">Name</label>
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-          {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
+          <label className="block mb-1 font-medium text-gray-700">Name</label>
+          <div className="flex items-center border border-gray-300 rounded-lg px-3 py-2 focus-within:ring-2 focus-within:ring-blue-500">
+            <User className="text-gray-400 mr-2" size={18} />
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              placeholder="Your full name"
+              className="w-full bg-transparent outline-none"
+            />
+          </div>
+          {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
         </div>
 
         <div>
-          <label className="block mb-1 font-medium">Email</label>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-          {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
+          <label className="block mb-1 font-medium text-gray-700">Email</label>
+          <div className="flex items-center border border-gray-300 rounded-lg px-3 py-2 focus-within:ring-2 focus-within:ring-blue-500">
+            <Mail className="text-gray-400 mr-2" size={18} />
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="you@example.com"
+              className="w-full bg-transparent outline-none"
+            />
+          </div>
+          {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
         </div>
 
         <div>
-          <label className="block mb-1 font-medium">Message</label>
-          <textarea
-            name="message"
-            value={formData.message}
-            onChange={handleChange}
-            rows="4"
-            className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-          {errors.message && <p className="text-red-500 text-sm">{errors.message}</p>}
+          <label className="block mb-1 font-medium text-gray-700">Message</label>
+          <div className="flex items-start border border-gray-300 rounded-lg px-3 py-2 focus-within:ring-2 focus-within:ring-blue-500">
+            <MessageSquare className="text-gray-400 mr-2 mt-1" size={18} />
+            <textarea
+              name="message"
+              value={formData.message}
+              onChange={handleChange}
+              rows="4"
+              placeholder="Write your message..."
+              className="w-full bg-transparent outline-none resize-none"
+            />
+          </div>
+          {errors.message && <p className="text-red-500 text-sm mt-1">{errors.message}</p>}
         </div>
 
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition-colors"
+          className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3 rounded-lg shadow-lg hover:from-blue-700 hover:to-indigo-700 transition-all duration-300"
         >
-          Send Message
+          <Send size={18} /> Send Message
         </button>
       </form>
     </div>
