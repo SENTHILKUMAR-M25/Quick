@@ -71,10 +71,10 @@ export default function Footer() {
           viewport={{ once: true }}
         >
           <h3 className="font-semibold text-white mb-4">Our Team</h3>
-          <p><strong>General Manager:</strong> Razmi Shaikh Khot</p>
-          <p><strong>Project Manager:</strong> Bashar Farid Rashd Mahfouz</p>
-          <p><strong>Coordinator:</strong> Govindraj</p>
-          <p><strong>Electrical Engineer:</strong> Murali Krishna</p>
+          <p><strong>General Manager:</strong> Razmi Shaikh Khat</p>
+          <p><strong>Project manager:</strong> Murali Muthu</p>
+          <p><strong>Admin Station Manager:</strong> Govindaraj</p>
+          <p><strong>Electrical Supervisor:</strong> Uthaya Kumar</p>
         </motion.div>
 
         {/* Contact Info */}

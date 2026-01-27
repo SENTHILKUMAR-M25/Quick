@@ -1,18 +1,19 @@
+
+
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-
-// EnquiryForm Component
+import logo from '../assets/logo11.png'
+/* =========================
+   ENQUIRY FORM MODAL
+========================= */
 function EnquiryForm({ service, onClose }) {
   const [formData, setFormData] = useState({
     fullName: "",
     companyName: "",
     email: "",
     contactNumber: "",
-    serviceType: service,
     message: "",
   });
-
-  const [successMsg, setSuccessMsg] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -21,209 +22,193 @@ function EnquiryForm({ service, onClose }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // ✅ Replace with your Admin WhatsApp Number (with country code, no + or spaces)
     const adminNumber = "96599693670"; 
-
-    const whatsappMessage = `Hello Sir/Madam,%0A
-📌 New Enquiry Submission%0A
-🛠 Service: ${service}%0A
-👤 Full Name: ${formData.fullName}%0A
-🏢 Company: ${formData.companyName}%0A
-📧 Email: ${formData.email}%0A
-📞 Contact: ${formData.contactNumber}%0A
-💬 Message: ${formData.message}`;
-
-    // Open WhatsApp with pre-filled message
+    const whatsappMessage = `Hello Sir/Madam,%0A📌 New Enquiry%0A🛠 Service: ${service}%0A👤 Name: ${formData.fullName}%0A🏢 Company: ${formData.companyName}%0A📧 Email: ${formData.email}%0A📞 Contact: ${formData.contactNumber}%0A💬 Message: ${formData.message}`;
     window.open(`https://wa.me/${adminNumber}?text=${whatsappMessage}`, "_blank");
-
-    setSuccessMsg(`Enquiry sent for: ${service}`);
-    setTimeout(() => setSuccessMsg(""), 3000);
-
-    setFormData({
-      fullName: "",
-      companyName: "",
-      email: "",
-      contactNumber: "",
-      serviceType: service,
-      message: "",
-    });
-
     onClose();
   };
 
   return (
     <AnimatePresence>
       <motion.div
-        className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+        className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
       >
         <motion.div
-          className="bg-white rounded-lg shadow-lg max-w-md w-full p-6 relative"
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          exit={{ scale: 0.8, opacity: 0 }}
-          transition={{ duration: 0.3 }}
+          className="bg-white rounded-2xl w-full max-w-md p-8 relative shadow-2xl border border-slate-100"
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: 20, opacity: 0 }}
         >
-          <button
-            onClick={onClose}
-            className="absolute top-3 right-3 text-gray-500 hover:text-gray-800 text-xl font-bold"
-          >
-            &times;
-          </button>
-          <h2 className="text-2xl font-bold mb-4 text-center">
-            Enquire About: {service}
-          </h2>
+          <button onClick={onClose} className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-2xl">×</button>
+          <h2 className="text-2xl font-bold mb-6 text-slate-800 border-b pb-2">Enquire: <span className="text-blue-600">{service}</span></h2>
           <form onSubmit={handleSubmit} className="space-y-4">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-            >
-              <label className="block text-sm font-medium text-gray-700">Full Name</label>
+            {["fullName", "companyName", "email", "contactNumber"].map((field) => (
               <input
-                type="text"
-                name="fullName"
-                value={formData.fullName}
-                onChange={handleChange}
+                key={field}
+                type={field === "email" ? "email" : field === "contactNumber" ? "tel" : "text"}
+                name={field}
+                placeholder={field.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}
                 required
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              />
-            </motion.div>
-
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
-              <label className="block text-sm font-medium text-gray-700">Company / Organization</label>
-              <input
-                type="text"
-                name="companyName"
-                value={formData.companyName}
                 onChange={handleChange}
-                required
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="w-full border border-slate-200 p-3 rounded-lg focus:ring-2 focus:ring-blue-400 outline-none transition-all"
               />
-            </motion.div>
-
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
-              <label className="block text-sm font-medium text-gray-700">Email</label>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              />
-            </motion.div>
-
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}>
-              <label className="block text-sm font-medium text-gray-700">Contact Number</label>
-              <input
-                type="tel"
-                name="contactNumber"
-                value={formData.contactNumber}
-                onChange={handleChange}
-                required
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              />
-            </motion.div>
-
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}>
-              <label className="block text-sm font-medium text-gray-700">Message</label>
-              <textarea
-                name="message"
-                value={formData.message}
-                onChange={handleChange}
-                required
-                rows="4"
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              />
-            </motion.div>
-
-            <motion.button
-              type="submit"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="w-full py-2 px-4 bg-green-600 hover:bg-green-700 text-white font-medium rounded-md shadow focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-            >
+            ))}
+            <textarea
+              name="message"
+              rows="3"
+              placeholder="How can we help you?"
+              required
+              onChange={handleChange}
+              className="w-full border border-slate-200 p-3 rounded-lg focus:ring-2 focus:ring-blue-400 outline-none"
+            />
+            <button type="submit" className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white font-bold py-3 rounded-lg shadow-lg transition-transform active:scale-95">
               📲 Send via WhatsApp
-            </motion.button>
+            </button>
           </form>
         </motion.div>
       </motion.div>
-
-      {/* Success Toast */}
-      <AnimatePresence>
-        {successMsg && (
-          <motion.div
-            initial={{ opacity: 0, y: -50 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -50 }}
-            transition={{ duration: 0.3 }}
-            className="fixed top-5 right-5 bg-green-600 text-white px-4 py-2 rounded shadow"
-          >
-            {successMsg}
-          </motion.div>
-        )}
-      </AnimatePresence>
     </AnimatePresence>
   );
 }
 
-// Services Data
-const SERVICES = [
-  { name: "Electrical Wiring", description: "Professional wiring services for homes, villas, and commercial projects ensuring safety and efficiency.", icon: "⚡" },
-  { name: "Electrical Installations", description: "Expert installation of electrical systems and components with compliance to safety standards.", icon: "💡" },
-  { name: "Sanitary Ware Installation", description: "Installation of sanitary fittings and plumbing fixtures with reliable workmanship.", icon: "🚿" },
-  { name: "Plots & Villas Work", description: "Complete electrical and sanitary extension services for plots and villas.", icon: "🏠" },
-  { name: "Electrical Extension", description: "Electrical extension services tailored to residential and commercial needs.", icon: "🔌" },
-  { name: "Sanitary Extension", description: "Expansion and modification of sanitary systems for existing and new projects.", icon: "🚰" },
-  { name: "Maintenance Contracts", description: "Long-term maintenance solutions for electrical and sanitary systems with quick response support.", icon: "🛠️" },
+/* =========================
+   DATA
+========================= */
+const CAPABILITIES = [
+  { title: "Oil & Gas Industrial", icon: "🛢️" },
+  { title: "Piping Works", icon: "🧵" },
+  { title: "Infrastructure", icon: "🏗️" },
+  { title: "Commercial", icon: "🏢" },
+  { title: "Electro-Mechanical", icon: "⚙️" },
+  { title: "Maintenance", icon: "🧑‍🔧" },
 ];
 
-// Services Page Component
+const SERVICES = [
+  { name: "Electrical Wiring", icon: "⚡", description: "Professional wiring services for residential and commercial projects." },
+  { name: "Electrical Installations", icon: "💡", description: "Complete electrical installations following safety standards." },
+  { name: "Sanitary Ware Installation", icon: "🚿", description: "Quality installation of sanitary and plumbing fixtures." },
+  { name: "Plots & Villas Work", icon: "🏠", description: "Electrical and sanitary services for villas and developments." },
+  { name: "Electrical Extension", icon: "🔌", description: "Electrical system extensions for existing buildings." },
+  { name: "Sanitary Extension", icon: "🚰", description: "Sanitary system expansion and modifications." },
+  { name: "Maintenance Contracts", icon: "🛠️", description: "Annual maintenance contracts with fast response support." },
+];
+
+/* =========================
+   MAIN PAGE
+========================= */
 export default function ServicesPage() {
   const [selectedService, setSelectedService] = useState(null);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <motion.h1
-        className="text-3xl font-bold text-gray-900 mb-8 text-center"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-      >
-        Our Services
-      </motion.h1>
+    <div className="bg-white min-h-screen text-slate-800">
+      <div className="max-w-7xl mx-auto px-6 py-16">
+        
+        {/* HERO SECTION */}
+        <section className="mb-20 flex flex-col items-center text-center">
+          <img src={logo} alt="Logo" className="h-32 mb-8 object-contain" />
+          <h1 className="text-5xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-900 via-blue-700 to-cyan-500">
+            PROTECTING YOUR ROI
+          </h1>
+          <h2 className="text-xl font-medium text-slate-500 mt-2 uppercase tracking-widest">
+            Turnkey Engineering Solutions
+          </h2>
+          <div className="w-24 h-1 bg-cyan-400 mt-6 rounded-full"></div>
+        </section>
 
-      {/* Service Cards Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {SERVICES.map((service, i) => (
-          <motion.div
-            key={service.name}
-            className="border rounded-lg p-6 shadow hover:shadow-lg transition cursor-pointer bg-white"
-            whileHover={{ scale: 1.05 }}
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.1 }}
-            onClick={() => setSelectedService(service.name)}
-          >
-            <div className="text-4xl mb-4">{service.icon}</div>
-            <h2 className="text-xl font-semibold mb-2">{service.name}</h2>
-            <p className="text-gray-600">{service.description}</p>
-          </motion.div>
-        ))}
+        {/* CAPABILITIES SECTION */}
+        <section className="mb-24">
+          <div className="flex items-center gap-4 mb-12">
+            <h2 className="text-3xl font-bold text-blue-900">Capabilities</h2>
+            <div className="flex-1 h-px bg-slate-100"></div>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+            {CAPABILITIES.map((item, i) => (
+              <motion.div
+                key={i}
+                whileHover={{ y: -5 }}
+                className="group flex flex-col items-center text-center p-6 bg-slate-50 rounded-2xl border border-transparent hover:border-blue-200 hover:bg-white hover:shadow-xl transition-all"
+              >
+                <div className="w-16 h-16 flex items-center justify-center bg-white rounded-full shadow-inner text-3xl mb-4 group-hover:scale-110 transition-transform">
+                  {item.icon}
+                </div>
+                <p className="font-bold text-sm text-blue-900 leading-tight">
+                  {item.title}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </section>
+
+        {/* OPTIMIZATION SECTION */}
+        <section className="mb-24 p-10 rounded-3xl bg-gradient-to-br from-blue-900 to-slate-900 text-white relative overflow-hidden">
+          <div className="relative z-10 grid md:grid-cols-2 gap-12 items-center">
+            <div>
+              <h2 className="text-4xl font-extrabold mb-4">Optimization <span className="text-cyan-400">of Assets</span></h2>
+              <p className="text-blue-100 mb-8 leading-relaxed">
+                KRH offers integrated facilities management (IFM) ensuring full operational efficiency and technical precision across diverse sectors.
+              </p>
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-y-3 gap-x-6 text-sm">
+                {["Airports & Mega Projects", "Commercial Buildings", "Medical Facilities", "Military Buildings", "Food Halls", "Residential Units"].map(list => (
+                  <li key={list} className="flex items-center gap-2">
+                    <span className="text-cyan-400">✔</span> {list}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="hidden md:flex justify-center">
+               <div className="w-64 h-64 rounded-full bg-cyan-400/10 border border-cyan-400/20 flex items-center justify-center">
+                  <div className="w-48 h-48 rounded-full bg-cyan-400/20 border border-cyan-400/30 animate-pulse"></div>
+               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* SERVICES SECTION */}
+        <section>
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-slate-900">Our Services</h2>
+            <p className="text-slate-500 mt-2">Tailored engineering excellence for every requirement</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {SERVICES.map((service, i) => (
+              <motion.div
+                key={i}
+                whileHover={{ scale: 1.02 }}
+                className="group border border-slate-100 rounded-2xl p-8 shadow-sm hover:shadow-2xl cursor-pointer bg-white transition-all"
+                onClick={() => setSelectedService(service.name)}
+              >
+                <div className="w-14 h-14 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center text-3xl mb-6 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                  {service.icon}
+                </div>
+                <h3 className="text-xl font-bold text-slate-800 mb-3 group-hover:text-blue-600 transition-colors">
+                  {service.name}
+                </h3>
+                <p className="text-slate-500 text-sm leading-relaxed">
+                  {service.description}
+                </p>
+                <div className="mt-6 text-blue-600 font-semibold text-sm flex items-center gap-2">
+                  Enquire Now <span className="group-hover:translate-x-1 transition-transform">→</span>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </section>
+
+        {/* MODAL */}
+        <AnimatePresence>
+          {selectedService && (
+            <EnquiryForm
+              service={selectedService}
+              onClose={() => setSelectedService(null)}
+            />
+          )}
+        </AnimatePresence>
       </div>
-
-      {/* Enquiry Form Modal */}
-      <AnimatePresence>
-        {selectedService && (
-          <EnquiryForm
-            service={selectedService}
-            onClose={() => setSelectedService(null)}
-          />
-        )}
-      </AnimatePresence>
     </div>
   );
 }
