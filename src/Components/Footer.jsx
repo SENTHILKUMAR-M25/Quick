@@ -74,7 +74,7 @@ export default function Footer() {
           <p><strong>General Manager:</strong> Razmi Shaikh Khat</p>
           <p><strong>Project manager:</strong> Murali Muthu</p>
           <p><strong>Administration Manager:</strong> Govindaraj</p>
-          <p><strong>Electrical Supervisor:</strong> Uthaya Kumar</p>
+          <p><strong>Electrical Supervisor:</strong> Udaya Kumar</p>
         </motion.div>
 
         {/* Contact Info */}
