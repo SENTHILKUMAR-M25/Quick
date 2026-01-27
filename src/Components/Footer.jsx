@@ -73,7 +73,7 @@ export default function Footer() {
           <h3 className="font-semibold text-white mb-4">Our Team</h3>
           <p><strong>General Manager:</strong> Razmi Shaikh Khat</p>
           <p><strong>Project manager:</strong> Murali Muthu</p>
-          <p><strong>Admin Station Manager:</strong> Govindaraj</p>
+          <p><strong>Administration Manager:</strong> Govindaraj</p>
           <p><strong>Electrical Supervisor:</strong> Uthaya Kumar</p>
         </motion.div>
 
