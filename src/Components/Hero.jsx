@@ -36,6 +36,15 @@ const TEAM_MEMBERS = [
   { role: "Electrical Supervisor", name: "Udaya Kumar" },
 ];
 
+const SERVICES = [
+  { name: "Electrical Wiring", icon: "⚡" },
+  { name: "Electrical Installations", icon: "💡" },
+  { name: "Sanitary Ware Installation", icon: "🚿" },
+  { name: "Plots & Villas Work", icon: "🏠" },
+  { name: "Electrical Extension", icon: "🔌" },
+  { name: "Sanitary Extension", icon: "🚰" },
+  { name: "Maintenance Contracts", icon: "🛠️" },
+];
 export default function HeroSlider() {
   const [index, setIndex] = useState(0);
 
@@ -176,6 +185,39 @@ export default function HeroSlider() {
           </div>
         </div>
       </section>
+         <section className="w-full py-16 bg-gray-50">
+      <div className="max-w-6xl mx-auto px-6">
+        
+        {/* Heading */}
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
+            Our Services
+          </h2>
+          <p className="text-gray-500 mt-2">
+            Quality solutions you can trust
+          </p>
+        </div>
+
+        {/* Services Grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-6">
+          {SERVICES.map((service, i) => (
+            <motion.div
+              key={i}
+              whileHover={{ y: -6 }}
+              className="flex flex-col items-center justify-center text-center bg-white rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-lg transition"
+            >
+              <div className="text-4xl mb-3">
+                {service.icon}
+              </div>
+              <p className="text-sm font-semibold text-gray-800">
+                {service.name}
+              </p>
+            </motion.div>
+          ))}
+        </div>
+
+      </div>
+    </section>
       {/* ----------------------- */}
 
       <ContactForm />
