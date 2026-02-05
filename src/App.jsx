@@ -7,6 +7,8 @@ import ServicesSection from './Components/Service'
 import Footer from './Components/Footer'
 import ContactForm from './Components/Contact'
 import ScrollToTop from './Components/Scroll'
+import Projects from './Components/Project/Projects'
+import ProjectDetail from './Components/Project/ProjectDetails'
 
 function App() {
   return (
@@ -18,7 +20,8 @@ function App() {
         <Route path="/About" element={<AboutSection />} />
         <Route path="/services" element={<ServicesSection />} />
         <Route path="/Contact" element={<ContactForm />} />
-
+        <Route path="/project" element={<Projects />} />
+        <Route path="/projects/:id" element={<ProjectDetail />} />
       </Routes>
       <Footer />
     </BrowserRouter>

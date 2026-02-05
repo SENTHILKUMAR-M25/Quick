@@ -106,6 +106,12 @@ export default function Header() {
             >
               Services
             </Link>
+            <Link
+              to="/project"
+              className="py-2 text-white hover:text-blue-200 transition font-medium"
+            >
+              Projects
+            </Link>
 
             <Link
               to="/contact"
@@ -152,6 +158,9 @@ export default function Header() {
             </Link>
             <Link to="/services" className="block py-2" onClick={() => setMobileOpen((v) => !v)}>
               Services
+            </Link>
+            <Link to="/project" className="block py-2" onClick={() => setMobileOpen((v) => !v)}>
+              Projects
             </Link>
 
             <Link to="/contact" className="block py-2" onClick={() => setMobileOpen((v) => !v)}>

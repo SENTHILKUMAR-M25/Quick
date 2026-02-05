@@ -217,7 +217,6 @@ export default function HeroSlider() {
           </div>
         </div>
       </section>
-
       {/* ----------------------- */}
 
       <ContactForm />
